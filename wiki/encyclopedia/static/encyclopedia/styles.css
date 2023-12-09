@@ -36,3 +36,36 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+
+/* create_new_entry page */
+
+.form-wrapper {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-wrapper form div {
+    display: flex;
+    flex-direction: column;
+    /* justify-items: center; */
+    align-items: baseline;
+  }
+  
+  .form-wrapper input[type="text"],
+  .form-wrapper textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .form-wrapper input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }

@@ -3,9 +3,7 @@ from django.http import HttpResponse
 import markdown
 import difflib
 
-
 from . import util
-
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -38,3 +36,21 @@ def search(request):
             return HttpResponse("No page found with title: " + q )
         
         return render(request, 'encyclopedia/search_results.html', {'title': q, 'search_results': search_results})
+    
+    
+def create_new_entry(request):
+    
+    if request.method == "POST":
+        form = util.NewEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            md_entry_content = form.cleaned_data['md_entry_content']
+            
+            entry = util.get_entry(title)
+            if entry:
+                return HttpResponse("Entry already exists")
+            util.save_entry(title, md_entry_content)
+            html_page = markdown.markdown(md_entry_content)
+            return render(request, 'encyclopedia/page.html', {'title': title, 'content': html_page})
+    
+    return render(request, "encyclopedia/create_new_entry.html", {'form': util.NewEntryForm()})
