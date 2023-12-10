@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import markdown
 import difflib
+import random
 
 from . import util
 
@@ -54,3 +55,26 @@ def create_new_entry(request):
             return render(request, 'encyclopedia/page.html', {'title': title, 'content': html_page})
     
     return render(request, "encyclopedia/create_new_entry.html", {'form': util.NewEntryForm()})
+
+def edit_entry(request, title):
+    
+    if request.method == "POST":
+        form = util.NewEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            md_entry_content = form.cleaned_data['md_entry_content']
+            util.save_entry(title, md_entry_content)
+            html_page = markdown.markdown(md_entry_content)
+            return render(request, 'encyclopedia/page.html', {'title': title, 'content': html_page})
+    
+    md_entry_content = util.get_entry(title)
+    form = util.NewEntryForm(initial={'title': title, 'md_entry_content': md_entry_content})
+   
+    return render(request, "encyclopedia/edit_entry.html", {'title': title, 'form': form})
+
+def get_random_page(request):
+    entries = util.list_entries()
+    page_title = random.choice(entries)
+    md_page = util.get_entry(page_title)
+    html_page = markdown.markdown(md_page)
+    return render(request, 'encyclopedia/page.html', {'title': page_title, 'content': html_page})

@@ -37,6 +37,21 @@ textarea {
     margin-top: 5px;
 }
 
+.search-bar-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.search-bar-wrapper input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* create_new_entry page */
 
 .form-wrapper {
