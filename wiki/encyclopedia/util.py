@@ -36,6 +36,7 @@ def get_entry(title):
     except FileNotFoundError:
         return None
 
+# THis is the class that represents the form found in "create_new_entry.html" page and "edit_entry.html" page
 class NewEntryForm(forms.Form):
     title = forms.CharField(label="Title")
     md_entry_content =  forms.CharField(widget=forms.Textarea, label="Entry Content")
